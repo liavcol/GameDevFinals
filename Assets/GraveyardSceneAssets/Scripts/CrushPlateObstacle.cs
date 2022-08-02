@@ -18,7 +18,6 @@ public class CrushPlateObstacle : MonoBehaviour
         _maxHeight = transform.position.y;
     }
 
-    // Update is called once per frame
     private void Update()
     {
         float yPos = Mathf.Min(Mathf.Max(transform.position.y + speed*dir*Time.deltaTime, _minHeight), _maxHeight);

@@ -5,9 +5,8 @@ using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour
 {
-
     [SerializeField] private GameObject inventorySlotUI;
-    private Dictionary<int, GameObject> slots = new Dictionary<int, GameObject>();
+    private readonly Dictionary<int, GameObject> slots = new();
 
     public void Add(InventoryItem inventoryItem)
     {

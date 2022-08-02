@@ -4,12 +4,9 @@ using UnityEngine;
 
 public class EnemyPatrol : MonoBehaviour
 {
-    [SerializeField]
-    private Transform[] waypoints;
-    [SerializeField]
-    private float waitTime = 3;
-    [SerializeField]
-    private float speed = 5;
+    [SerializeField] private Transform[] waypoints;
+    [SerializeField] private float waitTime = 3;
+    [SerializeField] private float speed = 5;
 
     private int currWaypoint = 0;
     private bool isWaiting = false;

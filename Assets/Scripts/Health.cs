@@ -4,14 +4,11 @@ using UnityEngine;
 
 public abstract class Health : MonoBehaviour
 {
-    [SerializeField] private int maxHealth = 100;
+    [SerializeField] protected int maxHealth = 100;
 
     protected int currentHealth;
 
-    public void Awake()
-    {
-        currentHealth = maxHealth;
-    }
+    private void Start() => currentHealth = maxHealth;
 
     public int CurrentHealth
     {
@@ -19,13 +16,6 @@ public abstract class Health : MonoBehaviour
         set
         { 
             currentHealth = value;
-            if (currentHealth > maxHealth)
-                currentHealth = maxHealth;
-            else if (currentHealth <= 0)
-            {
-                currentHealth = 0;
-                Die();
-            }
             OnHealthChanged();
         }
     }

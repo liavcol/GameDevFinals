@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DoorScript : MonoBehaviour
@@ -11,23 +9,21 @@ public class DoorScript : MonoBehaviour
     public delegate void DoorOpened();
     public event DoorOpened OnDoorOpened;
 
-    private void Start()
-    {
-        _animator = GetComponent<Animator>();
-    }
+    private void Awake() => TryGetComponent(out _animator);
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && other.TryGetComponent(out Inventory inventory) && inventory.HasItem(key))
         {
-            _animator.SetTrigger("Open");
+            if (_animator)
+                _animator.SetTrigger("Open");
             OnDoorOpened?.Invoke();
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && _animator)
             _animator.SetTrigger("Close");
     }
 }

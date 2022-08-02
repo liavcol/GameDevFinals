@@ -17,12 +17,22 @@ public class PlayerHealth : Health
 
     protected override void OnHealthChanged()
     {
-        if(healthHUD)
+        if (currentHealth > maxHealth)
+            currentHealth = maxHealth;
+        else if (currentHealth <= 0)
+        {
+            currentHealth = 0;
+            Die();
+        }
+
+        if (healthHUD)
             healthHUD.text = $"Health: {currentHealth}";
     }
 
     protected override void Die()
     {
+        Debug.Log("Player Died");
+        /*
         foreach (GameObject go in GameObject.FindGameObjectsWithTag("HUD"))
             go.SetActive(false);
 
@@ -36,5 +46,6 @@ public class PlayerHealth : Health
         }
         
         Destroy(gameObject);
+    */
     }
 }
