@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyPatrol : MonoBehaviour
 {
@@ -11,38 +12,37 @@ public class EnemyPatrol : MonoBehaviour
     private int currWaypoint = 0;
     private bool isWaiting = false;
 
-    private Rigidbody _rigidbody;
+    //private Rigidbody _rigidbody;
+    private NavMeshAgent _navMeshAgent;
 
+    private void Awake() => _navMeshAgent = GetComponent<NavMeshAgent>();
 
-    // Start is called before the first frame update
     private void Start()
     {
-        _rigidbody = GetComponent<Rigidbody>();
+        _navMeshAgent.speed = speed;
+        _navMeshAgent.SetDestination(waypoints[currWaypoint].position);
     }
 
-    // Update is called once per frame
     private void Update()
     {
+        if (isWaiting)
+            return;
+
         if (Vector3.Distance(transform.position, waypoints[currWaypoint].position) < 1)
         {
             currWaypoint++;
             currWaypoint %= waypoints.Length;
+            _navMeshAgent.SetDestination(waypoints[currWaypoint].position);
             StartCoroutine(WaitAtWaypoint());
         }
-    }
-
-    private void FixedUpdate()
-    {
-        if (!isWaiting)
-            _rigidbody.velocity = (waypoints[currWaypoint].position - _rigidbody.position).normalized * speed;        
     }
 
     private IEnumerator WaitAtWaypoint()
     {
         isWaiting = true;
-        _rigidbody.velocity = Vector3.zero;
+        _navMeshAgent.isStopped = true;
         yield return new WaitForSeconds(waitTime);
-        transform.LookAt(waypoints[currWaypoint]);
         isWaiting = false;
+        _navMeshAgent.isStopped = false;
     }
 }

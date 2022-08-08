@@ -1,13 +1,14 @@
+using System;
 using UnityEngine;
 
 public class DoorScript : MonoBehaviour
 {
-    [SerializeField] private InventoryItem key;
+    [SerializeField] 
+    private InventoryItem key;
 
     private Animator _animator;
 
-    public delegate void DoorOpened();
-    public event DoorOpened OnDoorOpened;
+    public Action OnDoorOpened;
 
     private void Awake() => TryGetComponent(out _animator);
 
