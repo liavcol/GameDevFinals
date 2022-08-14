@@ -1,14 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-public abstract class Health : MonoBehaviour
+public class Health : MonoBehaviour
 {
-    [SerializeField] protected int maxHealth = 100;
+    [SerializeField] 
+    protected int maxHealth = 100;
+    [SerializeField]
+    protected int deathDelay = 5;
 
     protected int currentHealth;
 
-    private void Start() => currentHealth = maxHealth;
+    protected virtual void Start() => currentHealth = maxHealth;
 
     public int CurrentHealth
     {
@@ -16,11 +18,24 @@ public abstract class Health : MonoBehaviour
         set
         { 
             currentHealth = value;
-            OnHealthChanged();
+            HealthChanged();
         }
     }
 
-    protected abstract void OnHealthChanged();
-    protected abstract void Die();
+    public Action OnDie;
+
+    protected virtual void HealthChanged()
+    {
+        if (currentHealth <= 0)
+            Die();
+    }
+
+    protected virtual void Die()
+    {
+        foreach (MonoBehaviour mono in GetComponents<MonoBehaviour>())
+            mono.enabled = false;
+        OnDie?.Invoke();
+        Destroy(gameObject, deathDelay);
+    }
 
 }

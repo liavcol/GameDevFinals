@@ -9,13 +9,14 @@ public class PlayerHealth : Health
     [SerializeField] private GameObject gameOverCamera;
     [SerializeField] private GameOverMenu gameOverCanvas;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         if (healthHUD)
             healthHUD.text = $"Health: {currentHealth}";
     }
 
-    protected override void OnHealthChanged()
+    protected override void HealthChanged()
     {
         if (currentHealth > maxHealth)
             currentHealth = maxHealth;
