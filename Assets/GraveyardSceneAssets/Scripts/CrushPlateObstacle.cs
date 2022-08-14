@@ -29,7 +29,7 @@ public class CrushPlateObstacle : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.CompareTag("Player"))
-            collision.gameObject.GetComponent<PlayerScript>().PlayerKilled();
+            collision.gameObject.GetComponent<Health>().CurrentHealth = 0;
     }
 
 }

@@ -33,6 +33,7 @@ public class PlayerHealth : Health
     protected override void Die()
     {
         Debug.Log("Player Died");
+        base.Die();
         /*
         foreach (GameObject go in GameObject.FindGameObjectsWithTag("HUD"))
             go.SetActive(false);

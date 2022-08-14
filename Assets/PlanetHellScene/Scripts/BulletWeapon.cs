@@ -13,6 +13,12 @@ public class BulletWeapon : Weapon
     {
         if (!canShoot)
             return;
+
+        if(animation)
+            animation.Play();
+        if(audioSource)
+            audioSource.Play();
+        
         Projectile.InstantiateProjectile(bullet, barrel.position, transform.rotation, weaponData, layer);
         StartCoroutine(CoolDown());
     }

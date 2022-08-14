@@ -9,6 +9,9 @@ public class MinimapCameraScript : MonoBehaviour
 
     private void Update()
     {
+        if(!followTarget)
+            return;
+
         Vector3 v = followTarget.position;
         v.y = transform.position.y;
 

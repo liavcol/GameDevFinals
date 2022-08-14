@@ -4,9 +4,27 @@ using UnityEngine.UI;
 
 public class GameOverMenu : MonoBehaviour
 {
-    [SerializeField] private Text messageText;
-    [SerializeField] private string winningMessage;
-    [SerializeField] private string losingMessage;
+    [SerializeField]
+    private Text messageText;
+    [SerializeField]
+    private string winningMessage;
+    [SerializeField]
+    private string losingMessage;
+    [SerializeField]
+    private new Camera camera;
+
+    public static void ActivateGameOverMenu(GameOverMenu gameOverMenu, bool playerWon)
+    {
+        foreach (GameObject go in GameObject.FindGameObjectsWithTag("HUD"))
+            go.SetActive(false);
+        foreach (GameObject go in GameObject.FindGameObjectsWithTag("Enemy"))
+            go.SetActive(false);
+
+        gameOverMenu.gameObject.SetActive(true);
+        gameOverMenu.PlayerWon = playerWon;
+        if (gameOverMenu.camera)
+            gameOverMenu.camera.gameObject.SetActive(true);
+    }
 
     private bool playerWon = true;
 
@@ -22,18 +40,13 @@ public class GameOverMenu : MonoBehaviour
         }
     }
 
-    public void Awake()
-    {
-        Cursor.lockState = CursorLockMode.None;
-    }
+    public void Awake() => Cursor.lockState = CursorLockMode.None;
 
-    public void PlayAgain()
-    {
-        SceneManager.LoadScene(0);
-    }
+    public void PlayGame(int sceneIndex) => SceneManager.LoadScene(sceneIndex);
 
-    public void Quit()
-    {
-        Application.Quit();
-    }
+    public void PlayAgain() => SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+    public void Quit() => SceneManager.LoadScene(0);
+
+    public void ExitGame() => Application.Quit();
 }

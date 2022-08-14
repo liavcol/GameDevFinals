@@ -35,7 +35,6 @@ public class Projectile : MonoBehaviour
     {
         if (gameObject.layer != other.gameObject.layer)
             return;
-        Debug.Log("trigger");
         if (other.TryGetComponent(out Health h))
             h.CurrentHealth -= weaponData.Damage;
     }

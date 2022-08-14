@@ -10,9 +10,14 @@ public class Weapon : MonoBehaviour
     protected bool isZoomed = false;
     protected float ogFOV;
 
-    private new Animation animation;
+    protected new Animation animation;
+    protected AudioSource audioSource;
 
-    private void Awake() => animation = GetComponent<Animation>();
+    private void Awake()
+    {
+        animation = GetComponent<Animation>();
+        audioSource = GetComponent<AudioSource>();
+    }
 
     private void OnEnable() => canShoot = true;
 
@@ -24,8 +29,12 @@ public class Weapon : MonoBehaviour
         if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, weaponData.Range, layer))
             if (hit.collider.TryGetComponent(out Health health))
                 health.CurrentHealth -= weaponData.Damage;
+        
         if(animation)
             animation.Play();
+        if(audioSource)
+            audioSource.Play();
+
         StartCoroutine(CoolDown());
     }
 

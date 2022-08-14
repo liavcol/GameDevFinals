@@ -7,6 +7,8 @@ TagManager:
   - KeyPickup
   - ObjectivesHUD
   - Weapon
+  - Enemy
+  - HUD
   layers:
   - Default
   - TransparentFX

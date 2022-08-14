@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Health2D : MonoBehaviour
+public class Health2D : Health
 {
     [SerializeField] bool isPlayer; //To seperate between player and enemy score
-    [SerializeField] int health = 50;
+    //[SerializeField] int health = 50;
     [SerializeField] int score = 50;
     [SerializeField] ParticleSystem hitEffect;
 
@@ -28,7 +28,8 @@ public class Health2D : MonoBehaviour
 
         if(damageDealer != null)
         {
-            TakeDamage(damageDealer.GetDamage()); // If player crush with enemy: reduce player health
+            //TakeDamage(damageDealer.GetDamage()); // If player crush with enemy: reduce player health
+            CurrentHealth -= damageDealer.GetDamage();
             PlayHitEffect();
             audioPlayer.PlayDamageClip();
             ShakeCamera();
@@ -38,9 +39,10 @@ public class Health2D : MonoBehaviour
 
     public int GetHealth()
     {
-        return health;
+        return currentHealth;
     }
 
+    /*
     void TakeDamage(int damage)
     {
         health -= damage;
@@ -49,14 +51,15 @@ public class Health2D : MonoBehaviour
             Die();
         }
     }
+    */
 
-    void Die()
+    protected override void Die()
     {
         if (!isPlayer) //This is not the player
         {
             scoreKeeper.ModifyScore(score);
         } 
-        Destroy(gameObject);
+        base.Die();
     }
 
     void PlayHitEffect()

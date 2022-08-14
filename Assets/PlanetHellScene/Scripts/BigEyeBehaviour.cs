@@ -13,8 +13,11 @@ public class BigEyeBehaviour : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
         StartCoroutine(AttackRoutine());
     }
-    private void Update() => transform.LookAt(player.position);
-
+    private void Update()
+    {
+        if(player)
+            transform.LookAt(player.position);
+    }
     private IEnumerator AttackRoutine()
     {
         System.Random random = new();
